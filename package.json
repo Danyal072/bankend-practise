@@ -1,0 +1,22 @@
+{
+  "name": "yt-clone",
+  "version": "1.0.0",
+  "description": "a backend at chai aur code channel - youtube",
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "scripts": {
+    "test": "nodemon src/index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "backend",
+    "chai aur code",
+    "youtube clone",
+    "yt clone"
+  ],
+  "author": "Danyal Ahmed",
+  "license": "ISC",
+  "type": "module"
+}
