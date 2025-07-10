@@ -22,16 +22,55 @@ src/
 package.json
 ```
 
-## 2. Which Packages I Used
+## 2. Which Packages we Used in this Project
 - `express`: Web framework for Node.js.
 - `mongoose`: ODM (Object Data Modeling) library for MongoDB and Node.js.
 - `dotenv`: Module to load environment variables from a `.env` file.
-## 3. How to Run the Project
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Install the dependencies using `npm install`.
-4. Create a `.env` file in the root directory and add the following environment variables:
+- `nodemon`: Utility that monitors for changes in your source code and automatically restarts the server.
+- `prettier`: Code formatter to ensure consistent code style.
+
+After installing these packages we start to setup the Prettier
+1. Create a `.prettierrc` file in the root directory of your project.
+2. Add the following configuration to the `.prettierrc` file:
 ```
-PORT=8000
-MONGO_URI=mongodb+srv://<username>:<password>@cluster0.pdzfsbd.mongodb.net
+{
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5"
+}
 ```
+3. Create a `.prettierignore` file in the root directory of your project.
+4. Add the following configuration to the `.prettierignore` file:
+```
+node_modules
+dist
+.env
+```
+
+## After That we Setup Database:
+We use two approches to connect to the database:
+1. Using `mongoose.connect()` method directly in the `index.js` file.
+2. Creating a separate `db/index.js` file to handle the database connection.
+
+The second approach is more modular and maintainable, especially for larger projects.
+### While Connecting Database we should to remind the following things:
+- Database is at Another Continent. So we should use Asynchronous Connection to prevent blocking and latency issues.
+- Use `async/await` for better readability and error handling.
+### Example of Database Connection:
+```javascript
+import mongoose from 'mongoose';
+import { DB_NAME } from '../constants.js';
+
+const connectDB = async() => {
+    try {
+        const connectionInstance = await mongoose.connect(`${process.env.MONGO_URI}/${DB_NAME}`)
+        console.log(`Database connected successfully: ${connectionInstance.connection.host}`);
+    } catch (error) {
+        console.error(`Database connection failed: ${error.message}`);
+        process.exit(1);
+    }
+};
+export default connectDB;
+```
+
