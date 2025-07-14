@@ -52,7 +52,7 @@ const userSchema = new Schema(
 // While writing code this middleware pre don't use arrow function () => {} because this type function didn't have any context like we didn't use this.
 userSchema.pre("save", async function (next) {
     if(!this.isModified("password")) return next()
-    this.password = bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 }) 
 
